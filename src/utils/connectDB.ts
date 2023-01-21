@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import config from 'config';
 
-const dbUrl = `mongodb://${config.get('dbName')}:${config.get(
+const dbUrl = `mongodb+srv://${config.get('dbName')}:${config.get(
     'dbPass'
-)}@localhost:6000/jwtAuth?authSource=admin`;
+)}@tempest.mp02iwc.mongodb.net/?retryWrites=true&w=majority`;
 
 const connectDB = async () => {
     try {
