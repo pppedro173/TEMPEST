@@ -18,4 +18,4 @@ export const updateRealTeamResultsSchema = object({
 
 
 export type CreateRealTeamInput = TypeOf<typeof createRealTeamSchema>['body'];
-export type updateRealTeamResultsInput = TypeOf<typeof updateRealTeamResultsSchema>['body'];
+export type UpdateRealTeamResultsInput = TypeOf<typeof updateRealTeamResultsSchema>['body'];
