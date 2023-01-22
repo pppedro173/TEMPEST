@@ -4,7 +4,6 @@ import {
     modelOptions,
     prop,
 } from '@typegoose/typegoose';
-import { ObjectId } from 'mongoose';
 
 @index({ name: 1 })
 
@@ -27,7 +26,7 @@ export class RealTeam {
     seasonResults: Array<string>;
 
     @prop({required: true, minlength: 5})
-    players: Array<ObjectId>;
+    players: Array<string>;
 }
 
 // Create the realTeam model from the realTeam class

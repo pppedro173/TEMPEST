@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateRealTeamInput, UpdateRealTeamResultsInput } from '../schemas/realTeam.schema';
 import { createRealTeam, updateRealTeamResults } from '../services/realTeam.service';
-import { Schema } from 'mongoose';
+import { Mongoose} from 'mongoose';
 
 export const registerRealTeamHandler = async (
     req: Request<{}, {}, CreateRealTeamInput>,
@@ -9,15 +9,11 @@ export const registerRealTeamHandler = async (
     next: NextFunction
 ) => {
     try {
-        const playersStringArray = req.body.players;
-
-        const players = playersStringArray.map((player) => new Schema.Types.ObjectId(player));
-
         const realTeam = await createRealTeam({
             name: req.body.name,
             picture: req.body.picture,
             seasonResults: req.body.seasonResults,
-            players: players,
+            players: req.body.players,
         });
 
         res.status(201).json({
