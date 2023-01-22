@@ -9,8 +9,8 @@ const router = express.Router();
 router.use(deserializeUser, requireUser);
 
 // Register real tem route
-router.post('/registerRealTeam', validate(createRealTeamSchema), registerRealTeamHandler);
-router.patch('/updateRealTeamResults', validate(updateRealTeamResultsSchema), updateRealTeamResultsHandler);
+router.post('/register', validate(createRealTeamSchema), registerRealTeamHandler);
+router.patch('/results', validate(updateRealTeamResultsSchema), updateRealTeamResultsHandler);
 
 export default router;
 
