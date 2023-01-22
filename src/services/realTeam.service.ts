@@ -28,5 +28,5 @@ export const findRealTeam = async (
 
 // Update one realTeam results array
 export const updateRealTeamResults = async (query: FilterQuery<RealTeam>, round: number, result: string) => {
-    return await realTeamModel.findOneAndUpdate(query, { $set: { [`results.${round}`]: result } }, { new: true });
+    return await realTeamModel.findOneAndUpdate(query, { $set: { [`seasonResults.${round}`]: result } }, { new: true });
 };
