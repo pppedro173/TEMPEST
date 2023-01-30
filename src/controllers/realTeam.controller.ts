@@ -76,7 +76,7 @@ export const getAllRealTeamsHandler = async (
     next: NextFunction
 ) => {
     try {
-        const teams = findAllRealTeams();
+        const teams = await findAllRealTeams();
         res.status(200).json({
             status: "success",
             data: {
