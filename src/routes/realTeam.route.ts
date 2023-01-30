@@ -12,7 +12,7 @@ router.use(deserializeUser, requireUser);
 // Register real tem route
 router.post('/register', validate(createRealTeamSchema), restrictTo('admin'), registerRealTeamHandler);
 router.patch('/results', validate(updateRealTeamResultsSchema), restrictTo('admin'), updateRealTeamResultsHandler);
-router.get('/teams)', getAllRealTeamsHandler);
+router.get('/teams', getAllRealTeamsHandler);
 
 export default router;
 
