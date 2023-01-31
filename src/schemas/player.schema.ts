@@ -13,7 +13,7 @@ export const createPlayersSchema = object({
 
 export const updatePlayersSchema = object({
     body: object({
-        round: number({required_error: 'Round number is required'}),
+        round: number({required_error: 'Round number is required'}).nonnegative('round number cant be negative'),
         players: array(object({
             name: string({ required_error: 'Name is required' }),
             rating: number({ required_error: 'Rating is required' }).nonnegative('ratings cant be negative'),
