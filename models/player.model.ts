@@ -4,7 +4,6 @@ import {
     modelOptions,
     prop,
 } from '@typegoose/typegoose';
-import * as mongoose from 'mongoose';
 
 @index({ name: 1 })
 
@@ -23,44 +22,51 @@ export class Player {
     @prop()
     picture: string;
 
-    @prop({ required: true })
-    rating: mongoose.Types.Decimal128
+    @prop({ required: true, default: 0.00 })
+    rating: number
 
-    @prop({required: true })
-    acs: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    acs: number;
 
-    @prop({required: true })
-    kd: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    kd: number;
 
-    @prop({required: true })
+    @prop({ required: true, default: 0 })
     kast: number;
 
-    @prop({required: true })
-    adr: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    adr: number;
 
-    @prop({required: true })
-    kpr: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    kpr: number;
 
-    @prop({required: true })
-    apr: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    apr: number;
 
-    @prop({required: true })
-    fkpr: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    fkpr: number;
 
-    @prop({required: true })
-    fdpr: mongoose.Types.Decimal128;
+    @prop({ required: true, default: 0.00 })
+    fdpr: number;
 
-    @prop({required: true })
+    @prop({ required: true, default: 0.00 })
     hs: number;
 
-    @prop ({required: true})
-    roundPoints: Array<Number>;
+    @prop({ required: true })
+    roundPoints: Array<number>;
 
-    @prop({required: true})
+    @prop({ required: true, default: 0 })
     cost: number;
 
-    @prop({required: true, minlength: 24})
+    @prop({ required: true, minlength: 24 })
     realTeam: string;
+
+    @prop({ required: true, default: 0 })
+    roundCount: number;
+
+    calculateAverageStat(roundCount: number, oldStatValue: number, newStatValue: number) {
+        return (((oldStatValue * (roundCount - 1)) + newStatValue) / roundCount);
+    }
 }
 
 // Create the realTeam model from the realTeam class
