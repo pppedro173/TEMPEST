@@ -13,7 +13,6 @@ export const createPlayersSchema = object({
 
 export const updatePlayersSchema = object({
     body: object({
-        round: number({required_error: 'Round number is required'}).nonnegative('round number cant be negative'),
         players: array(object({
             name: string({ required_error: 'Name is required' }),
             rating: number({ required_error: 'Rating is required' }).nonnegative('ratings cant be negative'),
@@ -31,6 +30,12 @@ export const updatePlayersSchema = object({
     })
 });
 
+export const getPlayerByIdSchema = object({
+    query: object({
+        id: string({ required_error: 'Id is required'}).min(24,'ids should be a valid MongoDB ObjectId')
+    })
+});
 
 export type CreatePlayersInput = TypeOf<typeof createPlayersSchema>['body'];
-export type updatePlayersInput = TypeOf<typeof updatePlayersSchema>['body'];
+export type UpdatePlayersInput = TypeOf<typeof updatePlayersSchema>['body'];
+export type GetPlayerByIdInput = TypeOf<typeof getPlayerByIdSchema>['query'];
