@@ -8,6 +8,7 @@ import connectDB from './utils/connectDB';
 import userRouter from './routes/user.route';
 import authRouter from './routes/auth.route';
 import realTeamRouter from './routes/realTeam.route';
+import playerRouter from './routes/player.route';
 
 const app = express();
 
@@ -34,12 +35,13 @@ app.use(
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/realTeam', realTeamRouter);
+app.use('/api/player', playerRouter);
 
 // Testing
 app.get('/healthChecker', (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({
     status: 'success',
-    message: 'Welcome to CodevoWeb????',
+    message: 'Welcome to tempest',
   });
 });
 
