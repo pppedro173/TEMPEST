@@ -14,14 +14,7 @@ import {
     },
 })
 
-// Export the player class to be used as TypeScript type
-export class Player {
-    @prop({ unique: true, required: true })
-    name: string;
-
-    @prop()
-    picture: string;
-
+export class Stats {
     @prop({ required: true, default: 0.00 })
     rating: number
 
@@ -52,8 +45,21 @@ export class Player {
     @prop({ required: true, default: 0.00 })
     hs: number;
 
+}
+
+// Export the player class to be used as TypeScript type
+export class Player {
+    @prop({ unique: true, required: true })
+    name: string;
+
+    @prop()
+    picture: string;
+
+    @prop({ required: true})
+    stats: Stats
+
     @prop({ required: true })
-    roundPoints: Array<number>;
+    currRoundPoints: Array<number>;
 
     @prop({ required: true, default: 0 })
     cost: number;
@@ -63,6 +69,9 @@ export class Player {
 
     @prop({ required: true, default: 0 })
     roundCount: number;
+
+    @prop({required: true, default:[]})
+    pointsByRound: Array<number>;
 
     calculateAverageStat(roundCount: number, oldStatValue: number, newStatValue: number) {
         return (((oldStatValue * (roundCount - 1)) + newStatValue) / roundCount);
