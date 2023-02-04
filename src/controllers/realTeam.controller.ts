@@ -1,7 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
-import { CreateRealTeamInput, UpdateRealTeamResultsInput } from '../schemas/realTeam.schema';
-import { createRealTeam, updateRealTeamResults } from '../services/realTeam.service';
-import { Mongoose} from 'mongoose';
+import { NextFunction, Request, Response } from "express";
+import {
+    CreateRealTeamInput,
+    UpdateRealTeamResultsInput,
+} from "../schemas/realTeam.schema";
+import {
+    createRealTeam,
+    findAllRealTeams,
+    updateRealTeamResults,
+} from "../services/realTeam.service";
 
 export const registerRealTeamHandler = async (
     req: Request<{}, {}, CreateRealTeamInput>,
@@ -17,7 +23,7 @@ export const registerRealTeamHandler = async (
         });
 
         res.status(201).json({
-            status: 'success',
+            status: "success",
             data: {
                 realTeam,
             },
@@ -25,8 +31,8 @@ export const registerRealTeamHandler = async (
     } catch (err: any) {
         if (err.code === 11000) {
             return res.status(409).json({
-                status: 'fail',
-                message: 'name already exists',
+                status: "fail",
+                message: "name already exists",
             });
         }
         next(err);
@@ -40,19 +46,23 @@ export const updateRealTeamResultsHandler = async (
 ) => {
     try {
         const query = {
-            name: req.body.name
+            name: req.body.name,
         };
 
         // Update realTeam results
-        const updatedRealTeam = await updateRealTeamResults(query, req.body.round, req.body.result);
+        const updatedRealTeam = await updateRealTeamResults(
+            query,
+            req.body.round,
+            req.body.result
+        );
         if (!updatedRealTeam) {
             return res.status(404).json({
-                status: 'error',
-                message: 'RealTeam not found',
+                status: "error",
+                message: "RealTeam not found",
             });
         }
         res.status(200).json({
-            status: 'success',
+            status: "success",
             data: updatedRealTeam,
         });
     } catch (err: any) {
@@ -60,3 +70,20 @@ export const updateRealTeamResultsHandler = async (
     }
 };
 
+export const getAllRealTeamsHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const teams = await findAllRealTeams();
+        res.status(200).json({
+            status: "success",
+            data: {
+                teams,
+            },
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
