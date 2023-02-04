@@ -47,7 +47,7 @@ export class Stats {
         fkpr?: number,
         fdpr?: number,
         hs?: number
-    }) {
+    } = {}) {
         if (stats.rating) this.rating = stats.rating;
         if (stats.acs) this.acs = stats.acs;
         if (stats.kd) this.kd = stats.kd;
@@ -79,7 +79,7 @@ export class Player {
     @prop()
     picture: string;
 
-    @prop({default:{}})
+    @prop({ default: new Stats()})
     stats: Stats
 
     @prop({ default: 0 })

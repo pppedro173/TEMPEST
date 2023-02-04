@@ -33,7 +33,7 @@ export const updatePlayerStats = async (query: FilterQuery<Player>, stats: Stats
 
     if (!oldPlayer) return null;
 
-    const roundCount = oldPlayer.roundCount;
+    const roundCount = oldPlayer.roundCount + 1;
 
     const updatedStats = {
         rating: oldPlayer.calculateAverageStat(roundCount, oldPlayer.stats.rating, stats.rating),
