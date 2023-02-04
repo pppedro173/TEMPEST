@@ -10,8 +10,8 @@ const router = express.Router();
 router.use(deserializeUser, requireUser);
 
 router.post('/register', validate(createPlayersSchema), restrictTo('admin'), registerPlayersHandler);
-router.post('/update', validate(updatePlayersSchema), restrictTo('admin'), updatePlayersHandler);
-router.get('/player:id', validate(getPlayerByIdSchema), getPlayerbyIdHandler);
-router.get('/players', getAllPlayersHandler);
+router.patch('/update', validate(updatePlayersSchema), restrictTo('admin'), updatePlayersHandler);
+router.get('/player/:id', validate(getPlayerByIdSchema), getPlayerbyIdHandler);
+router.get('/Allplayers', getAllPlayersHandler);
 
 export default router;

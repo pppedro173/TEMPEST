@@ -25,17 +25,17 @@ export const updatePlayersSchema = object({
             fkpr: number({ required_error: 'fkpr is required' }).nonnegative('fkpr cant be negative'),
             fdpr: number({ required_error: 'fdpr is required' }).nonnegative('fdpr cant be negative'),
             hs: number({ required_error: 'hs is required' }).int(),
-            roundPoints: array(number({ required_error: 'points is required' }).int().nonnegative()),
+            roundPoints: number({required_error: 'points are required'}).int(),
         }))
     })
 });
 
 export const getPlayerByIdSchema = object({
-    query: object({
+    params: object({
         id: string({ required_error: 'Id is required'}).min(24,'ids should be a valid MongoDB ObjectId')
     })
 });
 
 export type CreatePlayersInput = TypeOf<typeof createPlayersSchema>['body'];
 export type UpdatePlayersInput = TypeOf<typeof updatePlayersSchema>['body'];
-export type GetPlayerByIdInput = TypeOf<typeof getPlayerByIdSchema>['query'];
+export type GetPlayerByIdInput = TypeOf<typeof getPlayerByIdSchema>['params'];
