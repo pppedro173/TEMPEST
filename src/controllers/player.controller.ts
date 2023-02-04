@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Stats } from "../../models/player.model";
 import { CreatePlayersInput, GetPlayerByIdInput, UpdatePlayersInput } from "../schemas/player.schema";
-import { createPlayer, findAllPlayers, findPlayerById, updatePlayerStats } from "../services/player.service";
+import { createPlayer, findAllPlayers, findPlayerById, updatePlayerPoints, updatePlayerStats } from "../services/player.service";
 
 
 export const registerPlayersHandler = async (
@@ -36,9 +36,9 @@ export const updatePlayersHandler = async (
 ) => {
     try {
         const playersPromises = req.body.players.map(async (player) => {
-            const { name, ...statsValues } = player;
+            const { name, roundPoints, ...statsValues } = player;
             const stats = new Stats(statsValues);
-
+            await updatePlayerPoints({name: name}, roundPoints);
             return await updatePlayerStats(
                 { name: name },
                 stats
@@ -46,6 +46,7 @@ export const updatePlayersHandler = async (
         });
 
         const playersArray = await Promise.all(playersPromises);
+        
         const playerCount = playersArray.length;
         res.status(200).json({
             status: "success",
@@ -65,7 +66,7 @@ export const getPlayerbyIdHandler = async (
     next: NextFunction
 ) => {
     try {
-        const id = typeof req.query.id === 'string' ? req.query.id : '';
+        const id = typeof req.params.id === 'string' ? req.params.id : '';
         const player = await findPlayerById(id);
         if (!player) {
             return res.status(404).json({

@@ -5,15 +5,6 @@ import {
     prop,
 } from '@typegoose/typegoose';
 
-@index({ name: 1 })
-
-@modelOptions({
-    schemaOptions: {
-        // Add createdAt and updatedAt fields
-        timestamps: true,
-    },
-})
-
 export class Stats {
     @prop({ required: true, default: 0.00 })
     rating: number
@@ -56,7 +47,7 @@ export class Stats {
         fkpr?: number,
         fdpr?: number,
         hs?: number
-    }) {
+    } = {}) {
         if (stats.rating) this.rating = stats.rating;
         if (stats.acs) this.acs = stats.acs;
         if (stats.kd) this.kd = stats.kd;
@@ -71,6 +62,15 @@ export class Stats {
 
 }
 
+@index({ name: 1 })
+
+@modelOptions({
+    schemaOptions: {
+        // Add createdAt and updatedAt fields
+        timestamps: true,
+    },
+})
+
 // Export the player class to be used as TypeScript type
 export class Player {
     @prop({ unique: true, required: true })
@@ -79,11 +79,11 @@ export class Player {
     @prop()
     picture: string;
 
-    @prop({ required: true})
+    @prop({ default: new Stats()})
     stats: Stats
 
-    @prop({ required: true })
-    currRoundPoints: Array<number>;
+    @prop({ default: 0 })
+    currRoundPoints: number;
 
     @prop({ required: true, default: 0 })
     cost: number;
@@ -91,10 +91,10 @@ export class Player {
     @prop({ required: true, minlength: 24 })
     realTeam: string;
 
-    @prop({ required: true, default: 0 })
+    @prop({ default: 0 })
     roundCount: number;
 
-    @prop({required: true, default:[]})
+    @prop({default:[]})
     pointsByRound: Array<number>;
 
     calculateAverageStat(roundCount: number, oldStatValue: number, newStatValue: number) {

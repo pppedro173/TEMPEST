@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from "mongoose";
+import mongoose, { FilterQuery, QueryOptions } from "mongoose";
 import playerModel, { Player, Stats } from "../../models/player.model";
 
 //Create player service
@@ -9,7 +9,8 @@ export const createPlayer = async (input: Partial<Player>) => {
 
 //Find player by Id
 export const findPlayerById = async (id: string) => {
-    const player = await playerModel.findById(id).lean();
+    const mId = new mongoose.Types.ObjectId(id);
+    const player = await playerModel.findById(mId).lean();
     return player;
 }
 
@@ -32,7 +33,7 @@ export const updatePlayerStats = async (query: FilterQuery<Player>, stats: Stats
 
     if (!oldPlayer) return null;
 
-    const roundCount = oldPlayer.roundCount;
+    const roundCount = oldPlayer.roundCount + 1;
 
     const updatedStats = {
         rating: oldPlayer.calculateAverageStat(roundCount, oldPlayer.stats.rating, stats.rating),
@@ -57,6 +58,6 @@ export const updatePlayerPoints = async (query: FilterQuery<Player>, points: num
     if (!oldPlayer) return null;
 
     const roundCount = oldPlayer.roundCount;
-
-    return await playerModel.findOneAndUpdate(query, { $set: { [`pointsByRound.${roundCount}`]: points } }, { new: true });
+    await playerModel.findOneAndUpdate(query, {$set: {[`currRoundPoints`]: points}}, {new: true});
+    return await playerModel.findOneAndUpdate(query, { $set: { [`pointsByRound.${roundCount}`]: points }  }, { new: true });
 }
