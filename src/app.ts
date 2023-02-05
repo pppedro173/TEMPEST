@@ -9,6 +9,7 @@ import userRouter from './routes/user.route';
 import authRouter from './routes/auth.route';
 import realTeamRouter from './routes/realTeam.route';
 import playerRouter from './routes/player.route';
+import teamRouter from "./routes/team.route";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/realTeam', realTeamRouter);
 app.use('/api/player', playerRouter);
+app.use("/api/team", teamRouter);
 
 // Testing
 app.get('/healthChecker', (req: Request, res: Response, next: NextFunction) => {
