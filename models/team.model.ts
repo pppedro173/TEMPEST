@@ -18,10 +18,24 @@ export class Team {
   @prop({ unique: true, required: true })
   user: string;
 
-  @prop()
-  picture: string;
+  @prop({ required: true })
+  cost: number;
 
-  
+  @prop({ required: true })
+  players: Array<string>;
+
+  @prop({ default: 0 })
+  points: number;
+
+  @prop({ default: [] })
+  pointsByRound: Array<number>;
+
+  @prop({ default: 0 })
+  roundCount: number;
+
+  increasePoints(oldPoints: number, newPoints: number) {
+    return oldPoints + newPoints;
+  }
 }
 
 // Create the team model from the realTeam class
