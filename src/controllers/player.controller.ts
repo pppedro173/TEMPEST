@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Stats } from "../../models/player.model";
+import { Player, Stats } from "../../models/player.model";
 import { CreatePlayersInput, GetPlayerByIdInput, UpdatePlayersInput } from "../schemas/player.schema";
 import { createPlayer, findAllPlayers, findPlayerById, updatePlayerPoints, updatePlayerStats } from "../services/player.service";
 
@@ -10,7 +10,7 @@ export const registerPlayersHandler = async (
     next: NextFunction
 ) => {
     try {
-        const playersPromises = req.body.players.map(async (player) => {
+        const playersPromises = req.body.players.map(async (player: Player) => {
             return await createPlayer({
                 ...player
             });
@@ -46,7 +46,7 @@ export const updatePlayersHandler = async (
         });
 
         const playersArray = await Promise.all(playersPromises);
-        
+
         const playerCount = playersArray.length;
         res.status(200).json({
             status: "success",

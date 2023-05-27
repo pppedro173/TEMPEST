@@ -3,8 +3,8 @@ import playerModel, { Player, Stats } from "../../models/player.model";
 
 //Create player service
 export const createPlayer = async (input: Partial<Player>) => {
-    const player = await playerModel.create(input);
-    return player.toJSON();
+    await playerModel.create(input);
+    return findAllPlayers.toJson();
 }
 
 //Find player by Id
